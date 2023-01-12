@@ -6,6 +6,9 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
+import logging
+
+logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
 # Create your views here.
 @login_required(login_url='signin')
@@ -194,6 +197,14 @@ def settings(request):
 def signup(request):
 
     if request.method == 'POST':
+        logging.debug(request.META)
+        logging.debug(request.POST)
+        csrf_token = request.META.get('HTTP_X_CSRFTOKEN', None)
+        if not csrf_token:
+            csrf_token = request.POST.get('csrfmiddlewaretoken', None)
+        if not csrf_token:
+            logging.debug("error---------------------------")
+
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
