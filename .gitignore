@@ -1,2 +1,6 @@
 social_book/settings/dev.py
+<<<<<<< HEAD
 credential.json
+=======
+credential.json
+>>>>>>> a386c4bf6d75796db2d35816afce3894b6654508
