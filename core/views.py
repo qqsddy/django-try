@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile, Post, LikePost, FollowersCount
+from .models import Profile, Post, LikePost, FollowersCount, Upload
+from django.middleware.csrf import get_token
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
 import logging
+from storages.backends.gcloud import GoogleCloudStorage
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -65,6 +67,8 @@ def upload(request):
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
 
+        gcs = GoogleCloudStorage()
+        image_url = gcs.save(image.name, image)
         post = Post.objects.create(user=user.username, image=image, caption=caption)
         post.save()
         
