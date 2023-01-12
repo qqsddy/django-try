@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile, Post, LikePost, FollowersCount, Upload
-from django.middleware.csrf import get_token
+from .models import Profile, Post, LikePost, FollowersCount
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from itertools import chain
