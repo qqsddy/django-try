@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
 import logging
-from storages.backends.gcloud import GoogleCloudStorage
+#from storages.backends.gcloud import GoogleCloudStorage
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
