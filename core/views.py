@@ -68,7 +68,7 @@ def upload(request):
 
         gcs = GoogleCloudStorage()
         image_url = gcs.save(image.name, image)
-        post = Post.objects.create(user=user.username, image=image, caption=caption)
+        post = Post.objects.create(user=user.username, image=image_url, caption=caption)
         post.save()
         
         return redirect('/')
