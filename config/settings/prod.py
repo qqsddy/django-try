@@ -6,7 +6,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['try-deploy-django.com', '34.91.108.195']
+ALLOWED_HOSTS = ['try-deploy-django.com', '34.81.108.195']
 
 CSRF_TRUSTED_ORIGINS = ['https://try-deploy-django.com']
 CSRT_COOKIE_SECURE = True
