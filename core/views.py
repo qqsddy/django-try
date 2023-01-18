@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
 import logging
-#from storages.backends.gcloud import GoogleCloudStorage
+from storages.backends.gcloud import GoogleCloudStorage
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -66,8 +66,8 @@ def upload(request):
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
 
-        #gcs = GoogleCloudStorage()
-        #image_url = gcs.save(image.name, image)
+        gcs = GoogleCloudStorage()
+        image_url = gcs.save(image.name, image)
         post = Post.objects.create(user=user.username, image=image, caption=caption)
         post.save()
         
