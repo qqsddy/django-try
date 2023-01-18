@@ -8,7 +8,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
-    profileimg = models.TextField(default='blank-profile-picture.png')
+    profileimg = models.TextField(blank=True, default='blank-profile-picture.png')
     location = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -17,7 +17,7 @@ class Profile(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.CharField(max_length=100)
-    image = models.TextField() 
+    image = models.TextField(blank=True) 
     caption = models.TextField(blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     num_of_likes = models.IntegerField(default=0)
