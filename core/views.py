@@ -189,7 +189,8 @@ def settings(request):
             image = request.FILES.get('profile_img')
         
         gcs = GoogleCloudStorage()
-        image_url = gcs.save(image.name, image)
+        image_name = gcs.save(image.name, image)
+        image_url = gcs.url(image_name)
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
         user_profile.profileimg = image_url
         user_profile.bio = bio
