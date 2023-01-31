@@ -177,7 +177,7 @@ def search(request):
 @login_required(login_url='signin')
 def settings(request):
     user_profile = Profile.objects.get(user=request.user)
-
+    
     if request.method == 'POST':
         bio = request.POST['bio']
         location = request.POST['location']
@@ -188,6 +188,7 @@ def settings(request):
         if request.FILES.get('profile_img') != None:
             image = request.FILES.get('profile_img')
         
+        logging.debug(f'------------------------{image}-----------------')
         gcs = GoogleCloudStorage()
         image_name = gcs.save(image.name, image)
         image_url = gcs.url(image_name)
