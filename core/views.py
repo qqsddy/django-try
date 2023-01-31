@@ -203,7 +203,7 @@ def settings(request):
         
         return redirect('settings')
 
-    return render(request, 'settings.html', {'user_profile': user_profile})
+    return render(request, 'setting.html', {'user_profile': user_profile})
 
 def signup(request):
 
