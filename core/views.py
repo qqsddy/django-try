@@ -176,13 +176,9 @@ def search(request):
     
 @login_required(login_url='signin')
 def settings(request):
-<<<<<<< HEAD
     logging.debug(f'--------------------------in settings------------------------')
     logging.debug(f'------------------------------{request.user}-----------------------------')
     logging.debug(f'----------{Profile.objects.get(user=request.user)}-----------')
-=======
-    logging.debug(request.user)
->>>>>>> 349c9c7a2233b069a6a0ddadd97500253e52ab06
     user_profile = Profile.objects.get(user=request.user)
     
     if request.method == 'POST':
