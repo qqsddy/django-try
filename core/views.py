@@ -179,17 +179,27 @@ def settings(request):
     logging.debug(f'--------------------------in settings------------------------')
     logging.debug(f'------------------------------{request.user}-----------------------------')
     logging.debug(f'----------{Profile.objects.get(user=request.user)}-----------')
-    user_profile = Profile.objects.get(user=request.user)
+    try:
+        user_profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        logging.debug('profile doesnot exist')
+    except:
+        logging.debug('error.....')
+
     
     if request.method == 'POST':
+        logging.debug('---------------method post----------------------')
         bio = request.POST['bio']
         location = request.POST['location']
-
+        logging.debug('---------------method post 1----------------------')
         if request.FILES.get('profile_img') == None:
+            logging.debug('---------------method post img1----------------------')
             image = user_profile.profileimg
-        
+            logging.debug('---------------method post img2----------------------')
         if request.FILES.get('profile_img') != None:
+            logging.debug('---------------method post imgnone1----------------------')
             image = request.FILES.get('profile_img')
+            logging.debug('---------------method post imgnon2----------------------')
         
         logging.debug(f'------------------------{image}-----------------')
         gcs = GoogleCloudStorage()
