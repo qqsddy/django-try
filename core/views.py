@@ -176,6 +176,7 @@ def search(request):
     
 @login_required(login_url='signin')
 def settings(request):
+    logging.debug(request.user)
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
