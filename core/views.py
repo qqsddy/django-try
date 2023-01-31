@@ -56,7 +56,7 @@ def index(request):
 
 
 
-    return render(request, 'index', {'user_profile': user_profile, 'posts': feed_list, 'suggestions_profile_list':suggestions_profile_list[:4] })
+    return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed_list, 'suggestions_profile_list':suggestions_profile_list[:4] })
 
 @login_required(login_url='signin')
 def upload(request):
@@ -105,7 +105,7 @@ def profile(request, pk):
 
     }
 
-    return render(request, 'profile', context)
+    return render(request, 'profile.html', context)
 
 @login_required(login_url='signin')
 def like_post(request):
@@ -169,7 +169,7 @@ def search(request):
 
         username_profile_list = list(chain(*username_profile_list))
 
-    return render(request, 'search', {
+    return render(request, 'search.html', {
         'user_profile': user_profile,
         'username_profile_list': username_profile_list
     })
@@ -203,7 +203,7 @@ def settings(request):
         
         return redirect('settings')
 
-    return render(request, 'settings', {'user_profile': user_profile})
+    return render(request, 'settings.html', {'user_profile': user_profile})
 
 def signup(request):
 
@@ -245,7 +245,7 @@ def signup(request):
             messages.info(request, 'Password Not Matching')
             return redirect('signup')
     
-    return render(request, 'signup')
+    return render(request, 'signup.html')
 
 def signin(request):
 
@@ -262,7 +262,7 @@ def signin(request):
             messages.info(request, 'Credentials Invaild')
             return redirect('signin')
 
-    return render(request, 'signin')
+    return render(request, 'signin.html')
 
 @login_required(login_url='signin')
 def logout(request):
