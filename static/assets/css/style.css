@@ -14,10 +14,6 @@ body{
 /* ---------------------------------- */
 /* Buttons
 ------------------------------------- */
-.upload-pic{
-  display: block;
-}
-
 button {
   vertical-align: middle;
 }

@@ -177,6 +177,10 @@ Forms
 2. Remove the margin in Firefox and Safari.
 */
 
+.upload-pic{
+  display: none;
+} 
+
 button,
 input,
 optgroup,
