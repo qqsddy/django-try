@@ -178,7 +178,7 @@ Forms
 */
 
 .upload-pic{
-  display: none;
+  display: block;
 } 
 
 button,
