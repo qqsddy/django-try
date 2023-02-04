@@ -178,7 +178,9 @@ Forms
 */
 
 .upload-pic{
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center
 } 
 
 button,
