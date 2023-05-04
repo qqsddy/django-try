@@ -1,2 +1,6 @@
 config/settings/dev.py
+config/settings/prod.py
 credential.json
+sql_credential.json
+db.sqlite3
+backup_database.json
