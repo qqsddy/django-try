@@ -66,13 +66,13 @@ def upload(request):
         image = request.FILES.get('image_upload')
 
         caption = request.POST['caption']
-
+        
         gcs = GoogleCloudStorage()
         image_url = gcs.save('posts/' + image.name, image)
         logging.debug(f'image url: {image_url}')
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
         post.save()
-        
+
         return redirect('/')
 
     return redirect('/')
@@ -201,7 +201,7 @@ def settings(request):
         user_profile.bio = bio
         user_profile.location = location
         user_profile.save()
-        
+
         return redirect('settings')
 
     return render(request, 'setting.html', {'user_profile': user_profile})
