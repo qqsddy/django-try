@@ -68,7 +68,8 @@ def upload(request):
         caption = request.POST['caption']
         
         gcs = GoogleCloudStorage()
-        image_url = gcs.save('posts/' + image.name, image)
+        image_name = gcs.save('posts/' + image.name, image)
+        image_url = gcs.url(image_name)
         logging.debug(f'image url: {image_url}')
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
         post.save()
@@ -194,8 +195,8 @@ def settings(request):
             image = request.FILES.get('profile_img')
         
         gcs = GoogleCloudStorage()
-        image_name = gcs.save(image.name, image)
-        image_url = gcs.url('profiles/' + image_name)
+        image_name = gcs.save('profiles/' + image.name, image)
+        image_url = gcs.url(image_name)
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
         user_profile.profileimg = image_url
         user_profile.bio = bio
