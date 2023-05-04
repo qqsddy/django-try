@@ -6,7 +6,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['try-deploy-django.com', '34.81.108.195']
+ALLOWED_HOSTS = ['try-deploy-django.com', '34.81.108.195', '10.140.0.5']
 
 CSRF_TRUSTED_ORIGINS = ['https://try-deploy-django.com']
 CSRT_COOKIE_SECURE = True
@@ -22,3 +22,15 @@ GS_CREDENTIALS = service_account.Credentials.from_service_account_file(os.path.j
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'try-deploy-django-bucket'
 MEDIA_URL = 'https://storage.googleapis.com/try-deploy-django-bucket/'
+
+##database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'social_book',
+        'USER': 'sql-user',
+        'PASSWORD': 'sql-user',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
