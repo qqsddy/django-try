@@ -177,6 +177,12 @@ Forms
 2. Remove the margin in Firefox and Safari.
 */
 
+.upload-pic{
+  display: flex;
+  align-items: center;
+  justify-content: center
+} 
+
 button,
 input,
 optgroup,
@@ -2176,6 +2182,10 @@ body{  font-family: inter, sans-serif !important
 }
 
 @media (min-width: 1024px){
+  .upload-pic{
+    display: none;
+  }
+
   .lg\:space-y-0 > :not([hidden]) ~ :not([hidden]){
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));

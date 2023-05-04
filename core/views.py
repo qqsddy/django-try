@@ -64,11 +64,17 @@ def upload(request):
     if request.method == 'POST':
         user = request.user
         image = request.FILES.get('image_upload')
+
         caption = request.POST['caption']
 
         gcs = GoogleCloudStorage()
+<<<<<<< HEAD
         image_url = gcs.save('posts/' + image.name, image)
         logging.debug(f'image url: {image_url}')
+=======
+        image_name = gcs.save(image.name, image)
+        image_url = gcs.url(image_name)
+>>>>>>> 30213896a3137335d993a1987975c76aacf32f09
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
         post.save()
         
@@ -176,9 +182,6 @@ def search(request):
     
 @login_required(login_url='signin')
 def settings(request):
-    logging.debug(f'--------------------------in settings------------------------')
-    logging.debug(f'------------------------------{request.user}-----------------------------')
-    logging.debug(f'----------{Profile.objects.get(user=request.user)}-----------')
     try:
         user_profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
@@ -188,24 +191,21 @@ def settings(request):
 
     
     if request.method == 'POST':
-        logging.debug('---------------method post----------------------')
         bio = request.POST['bio']
         location = request.POST['location']
-        logging.debug('---------------method post 1----------------------')
         if request.FILES.get('profile_img') == None:
-            logging.debug('---------------method post img1----------------------')
             image = user_profile.profileimg
-            logging.debug('---------------method post img2----------------------')
         if request.FILES.get('profile_img') != None:
-            logging.debug('---------------method post imgnone1----------------------')
             image = request.FILES.get('profile_img')
-            logging.debug('---------------method post imgnon2----------------------')
         
-        logging.debug(f'------------------------{image}-----------------')
         gcs = GoogleCloudStorage()
         image_name = gcs.save(image.name, image)
+<<<<<<< HEAD
         image_url = gcs.url('profiles/' + image_name)
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
+=======
+        image_url = gcs.url(image_name)
+>>>>>>> 30213896a3137335d993a1987975c76aacf32f09
         user_profile.profileimg = image_url
         user_profile.bio = bio
         user_profile.location = location
@@ -218,8 +218,6 @@ def settings(request):
 def signup(request):
 
     if request.method == 'POST':
-        logging.debug(request.META)
-        logging.debug(request.POST)
         csrf_token = request.META.get('HTTP_X_CSRFTOKEN', None)
         if not csrf_token:
             csrf_token = request.POST.get('csrfmiddlewaretoken', None)
