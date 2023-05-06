@@ -39,7 +39,7 @@ def index(request):
         user_following_all.append(User.objects.get(username=user.user))
 
     new_suggestions_list = [x for x in list(all_users) if x not in list(user_following_all)]
-    current_user = User.objects.filter(username=request.user.username)
+    current_user = User.objects.filter(username=request.user.username).first()
     final_suggestions_list = [x for x in list(new_suggestions_list) if x != current_user]
     random.shuffle(final_suggestions_list)
 
@@ -203,7 +203,7 @@ def settings(request):
         user_profile.location = location
         user_profile.save()
 
-        return redirect('settings')
+        return redirect('/')
 
     return render(request, 'setting.html', {'user_profile': user_profile})
 

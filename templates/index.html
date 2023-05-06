@@ -126,7 +126,7 @@
                             <h4
                                 class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
                                 Notification </h4>
-                            <ul class="dropdown_scrollbar" data-simplebar>
+                            <!-- <ul class="dropdown_scrollbar" data-simplebar>
                                 <li>
                                     <a href="#">
                                         <div class="drop_avatar"> <img src="" alt="">
@@ -142,7 +142,7 @@
                                 
 
                             </ul>
-                            <a href="#" class="see-all">See all</a>
+                            <a href="#" class="see-all">See all</a> -->
                         </div>
 
                         <!-- Messages -->
@@ -154,7 +154,7 @@
                             <h4
                                 class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
                                 Messages </h4>
-                            <ul class="dropdown_scrollbar" data-simplebar>
+                            <!-- <ul class="dropdown_scrollbar" data-simplebar>
                                 <li>
                                     <a href="#">
                                         <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
@@ -169,7 +169,7 @@
 
 
                             </ul>
-                            <a href="#" class="see-all">See all</a>
+                            <a href="#" class="see-all">See all</a> -->
                         </div>
 
                         <!-- profile -->
@@ -180,7 +180,7 @@
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
                                 <li><a href="settings"> Account setting </a> </li>
-                                <li><a href="explore.html">explore </a> </li>
+                                <li><a href="/profile/user_profile.user">explore </a> </li>
                                 <li><a href="#"> Help </a> </li>
                                 <li><a href="logout"> Log Out</a></li>
                             </ul>
@@ -811,7 +811,7 @@
                                 {% for suggestion in suggestions_profile_list%}
                                 <div class="flex items-center justify-between py-3">
                                     <div class="flex flex-1 items-center space-x-4">
-                                        <a href="profile.html">
+                                        <a href="/profile/{{suggestion.user}}">
                                             <img src="{{suggestion.profileimg}}" class="bg-gray-200 rounded-full w-10 h-10">
                                         </a>
                                         <div class="flex flex-col">
