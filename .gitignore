@@ -3,8 +3,4 @@ config/settings/prod.py
 credential.json
 sql_credential.json
 db.sqlite3
-<<<<<<< HEAD
 backup_database.json
-=======
-backup_database.json
->>>>>>> 91bb2528bb1a7534f3479319a2cd2ed12d8d0e16
