@@ -9,9 +9,8 @@ import random
 import logging
 from storages.backends.gcloud import GoogleCloudStorage
 from google.cloud import storage
-from django.conf import settings
 
-bucket_name = settings.GS_BUCKET_NAME
+bucket_name = 'try-deploy-django-bucket'
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -43,7 +42,7 @@ def index(request):
         user_following_all.append(User.objects.get(username=user.user))
 
     new_suggestions_list = [x for x in list(all_users) if x not in list(user_following_all)]
-    current_user = User.objects.filter(username=request.user.username).first()
+    current_user = User.objects.first()
     final_suggestions_list = [x for x in list(new_suggestions_list) if x != current_user]
     random.shuffle(final_suggestions_list)
 
@@ -59,7 +58,6 @@ def index(request):
     suggestions_profile_list = list(chain(*username_profile_list))
 
 
-
     return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed_list, 'suggestions_profile_list':suggestions_profile_list[:4] })
 
 @login_required(login_url='signin')
@@ -73,9 +71,16 @@ def upload(request):
         # Upload the image to Google Cloud Storage
         client = storage.Client()
         bucket = client.bucket(bucket_name)
-        blob = bucket.blob('posts/' + image.name)
-        blob.upload_from_file(image)
+        # Set the URL link as the content to upload
+        url_link = f'https://storage.cloud.google.com/{bucket_name}/posts/{image.name}'
+        blob.upload_from_string(url_link)
+
+        # Get the public URL for the blob
         image_url = blob.public_url
+
+        #blob = bucket.blob('posts/' + image.name)
+        #blob.upload_from_filename(image)
+        #image_url = blob.public_url
         
         # Create a new post object and save the public URL to the database
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
@@ -205,7 +210,7 @@ def settings(request):
         client = storage.Client()
         bucket = client.bucket(bucket_name)
         blob = bucket.blob('profiles/' + image.name)
-        blob.upload_from_file(image)
+        blob.upload_from_filename(image)
         image_url = blob.public_url
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
         
@@ -280,3 +285,5 @@ def signin(request):
 def logout(request):
     auth.logout(request)
     return redirect('signin')
+
+
