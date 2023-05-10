@@ -9,7 +9,9 @@ import random
 import logging
 from storages.backends.gcloud import GoogleCloudStorage
 from google.cloud import storage
-from config.settings.prod import GS_BUCKET_NAME
+from django.conf import settings
+
+bucket_name = settings.GS_BUCKET_NAME
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -70,7 +72,7 @@ def upload(request):
             
         # Upload the image to Google Cloud Storage
         client = storage.Client()
-        bucket = client.bucket(GS_BUCKET_NAME)
+        bucket = client.bucket(bucket_name)
         blob = bucket.blob('posts/' + image.name)
         blob.upload_from_file(image)
         image_url = blob.public_url
@@ -201,7 +203,7 @@ def settings(request):
             
         # Upload the image to Google Cloud Storage
         client = storage.Client()
-        bucket = client.bucket(GS_BUCKET_NAME)
+        bucket = client.bucket(bucket_name)
         blob = bucket.blob('profiles/' + image.name)
         blob.upload_from_file(image)
         image_url = blob.public_url
