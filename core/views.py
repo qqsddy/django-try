@@ -8,7 +8,8 @@ from itertools import chain
 import random
 import logging
 from storages.backends.gcloud import GoogleCloudStorage
-from django.core.files.storage import default_storage
+from google.cloud import storage
+from config.settings.prod import GS_BUCKET_NAME
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -66,10 +67,13 @@ def upload(request):
         user = request.user
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
-        
+            
         # Upload the image to Google Cloud Storage
-        image_name = default_storage.save('posts/' + image.name, image)
-        image_url = default_storage.url(image_name)
+        client = storage.Client()
+        bucket = client.bucket(GS_BUCKET_NAME)
+        blob = bucket.blob('posts/' + image.name)
+        blob.upload_from_file(image)
+        image_url = blob.public_url
         
         # Create a new post object and save the public URL to the database
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
@@ -196,8 +200,11 @@ def settings(request):
             image = request.FILES.get('profile_img')
             
         # Upload the image to Google Cloud Storage
-        image_name = default_storage.save('profiles/' + image.name, image)
-        image_url = default_storage.url(image_name)
+        client = storage.Client()
+        bucket = client.bucket(GS_BUCKET_NAME)
+        blob = bucket.blob('profiles/' + image.name)
+        blob.upload_from_file(image)
+        image_url = blob.public_url
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
         
         user_profile.profileimg = image_url
