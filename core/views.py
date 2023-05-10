@@ -8,9 +8,13 @@ from itertools import chain
 import random
 import logging
 from storages.backends.gcloud import GoogleCloudStorage
+<<<<<<< HEAD
 from google.cloud import storage
 
 bucket_name = 'try-deploy-django-bucket'
+=======
+from django.core.files.storage import default_storage
+>>>>>>> d6520b29ca01e972570c7e6479c564a82b0cd4e4
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -67,8 +71,9 @@ def upload(request):
         user = request.user
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
-            
+        
         # Upload the image to Google Cloud Storage
+<<<<<<< HEAD
         client = storage.Client()
         bucket = client.bucket(bucket_name)
         # Set the URL link as the content to upload
@@ -81,6 +86,10 @@ def upload(request):
         #blob = bucket.blob('posts/' + image.name)
         #blob.upload_from_filename(image)
         #image_url = blob.public_url
+=======
+        image_name = default_storage.save('posts/' + image.name, image)
+        image_url = default_storage.url(image_name)
+>>>>>>> d6520b29ca01e972570c7e6479c564a82b0cd4e4
         
         # Create a new post object and save the public URL to the database
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
@@ -207,11 +216,16 @@ def settings(request):
             image = request.FILES.get('profile_img')
             
         # Upload the image to Google Cloud Storage
+<<<<<<< HEAD
         client = storage.Client()
         bucket = client.bucket(bucket_name)
         blob = bucket.blob('profiles/' + image.name)
         blob.upload_from_filename(image)
         image_url = blob.public_url
+=======
+        image_name = default_storage.save('profiles/' + image.name, image)
+        image_url = default_storage.url(image_name)
+>>>>>>> d6520b29ca01e972570c7e6479c564a82b0cd4e4
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
         
         user_profile.profileimg = image_url
@@ -284,6 +298,10 @@ def signin(request):
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
+<<<<<<< HEAD
     return redirect('signin')
 
 
+=======
+    return redirect('signin')
+>>>>>>> d6520b29ca01e972570c7e6479c564a82b0cd4e4
