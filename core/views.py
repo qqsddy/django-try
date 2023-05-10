@@ -8,6 +8,7 @@ from itertools import chain
 import random
 import logging
 from storages.backends.gcloud import GoogleCloudStorage
+from django.core.files.storage import default_storage
 
 logging.basicConfig(filename='/demo/var/logs/debug.log', level=logging.DEBUG)
 
@@ -64,13 +65,13 @@ def upload(request):
     if request.method == 'POST':
         user = request.user
         image = request.FILES.get('image_upload')
-
         caption = request.POST['caption']
         
-        gcs = GoogleCloudStorage()
-        image_name = gcs.save('posts/' + image.name, image)
-        image_url = gcs.url(image_name)
-        logging.debug(f'image url: {image_url}')
+        # Upload the image to Google Cloud Storage
+        image_name = default_storage.save('posts/' + image.name, image)
+        image_url = default_storage.url(image_name)
+        
+        # Create a new post object and save the public URL to the database
         post = Post.objects.create(user=user.username, image=image_url, caption=caption)
         post.save()
 
@@ -193,15 +194,17 @@ def settings(request):
             image = user_profile.profileimg
         if request.FILES.get('profile_img') != None:
             image = request.FILES.get('profile_img')
-        
-        gcs = GoogleCloudStorage()
-        image_name = gcs.save('profiles/' + image.name, image)
-        image_url = gcs.url(image_name)
+            
+        # Upload the image to Google Cloud Storage
+        image_name = default_storage.save('profiles/' + image.name, image)
+        image_url = default_storage.url(image_name)
         logging.debug(f'image url -----------------------------------: {image_url}-----------------------------')
+        
         user_profile.profileimg = image_url
         user_profile.bio = bio
         user_profile.location = location
         user_profile.save()
+
 
         return redirect('/')
 
